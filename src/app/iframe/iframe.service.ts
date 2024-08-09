@@ -12,7 +12,7 @@ export class IframeService {
   getIframeSrc(): Observable<string> {
     const serviceUrl = "http://89.149.175.221/reports/powerbi/fleets?rs:embeded=true";
     const headers = new HttpHeaders({
-      'Authorization': 'Basic RElHSVRBSVAtUkVQT1JUXGphdmllci5nb256YWxlejpUZW1wb3JhbDAxLg=='
+      //'Authorization': 'Basic RElHSVRBSVAtUkVQT1JUXGphdmllci5nb256YWxlejpUZW1wb3JhbDAxLg=='
     });
 
     return this.http.get(serviceUrl, { headers, responseType: 'text' }).pipe(

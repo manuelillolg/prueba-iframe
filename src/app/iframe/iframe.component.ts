@@ -1,6 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
-import { IframeService } from './iframe.service';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,22 +10,24 @@ import { CommonModule } from '@angular/common';
   standalone : true
 })
 export class IframeComponent implements OnInit {
-  iframeSrc: SafeHtml = '';
+  iframeSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl("")
+  authenticated = false;
 
   constructor(
-    private iframeService: IframeService,
-    private sanitizer: DomSanitizer
+    private sanitizer : DomSanitizer,
   ) {}
 
-  ngOnInit() {
-    this.iframeService.getIframeSrc().subscribe(
-      (src) => {
+  ngOnInit(): void {
 
-        this.iframeSrc = this.sanitizer.bypassSecurityTrustHtml(src)
-      },
-      (error) => {
-        console.error('Error al obtener el src del iframe:', error);
-      }
-    );
+    const login = window.open('http://javier.gonzalez:Temporal01.@89.149.175.221/reports/powerbi/aircraftmodel?rs:embed=true', '_blank', 'width=600,height=400,scrollbars=yes,resizable=yes');
+
+    if(login){
+      setTimeout(() => {
+        login?.close();
+        this.iframeSrc =this.sanitizer.bypassSecurityTrustResourceUrl(' http://89.149.175.221/reports/powerbi/aircraftmodel?rs:embed=true')
+      }, 3000);
+    }
   }
 }
+
+
